@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Algorithms Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>CPU Scheduling Algorithms Visualizer</h1>
+            <p class="subtitle">Interactive simulation and visualization of process scheduling</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="card input-section">
+            <h2>Process Input</h2>
+
+            <!-- Algorithm Selection -->
+            <div class="controls-row">
+                <div class="control-group">
+                    <label for="algorithm">Algorithm:</label>
+                    <select id="algorithm">
+                        <option value="fcfs">FCFS (First Come First Serve)</option>
+                        <option value="sjf">SJF (Shortest Job First)</option>
+                        <option value="srtf">SRTF (Shortest Remaining Time First)</option>
+                        <option value="priority-np">Priority Scheduling (Non-Preemptive)</option>
+                        <option value="priority-p">Priority Scheduling (Preemptive)</option>
+                        <option value="rr">Round Robin</option>
+                        <option value="rr-priority">Round Robin with Priority</option>
+                    </select>
+                </div>
+
+                <div class="control-group" id="quantum-group">
+                    <label for="timeQuantum">Time Quantum:</label>
+                    <input type="number" id="timeQuantum" min="1" value="2">
+                </div>
+            </div>
+
+            <!-- Process Table -->
+            <div class="table-container">
+                <table id="processTable">
+                    <thead>
+                        <tr>
+                            <th>Process ID</th>
+                            <th>Arrival Time</th>
+                            <th>Burst Time</th>
+                            <th>Priority</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="processTableBody">
+                        <!-- Rows will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="addProcess()">
+                    <span>+</span> Add Process
+                </button>
+                <button class="btn btn-primary" onclick="runSimulation()">
+                    <span>▶</span> Run Simulation
+                </button>
+                <button class="btn btn-danger" onclick="resetAll()">
+                    <span>↻</span> Reset
+                </button>
+            </div>
+        </section>
+
+        <!-- Gantt Chart Section -->
+        <section class="card gantt-section" id="ganttSection" style="display: none;">
+            <h2>Gantt Chart</h2>
+            <div class="gantt-container">
+                <canvas id="ganttChart"></canvas>
+            </div>
+            <div id="ganttLegend" class="gantt-legend"></div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="card results-section" id="resultsSection" style="display: none;">
+            <h2>Process Results</h2>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Process ID</th>
+                            <th>Arrival Time</th>
+                            <th>Burst Time</th>
+                            <th>Completion Time</th>
+                            <th>Turnaround Time</th>
+                            <th>Waiting Time</th>
+                            <th>Response Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                        <!-- Results will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="card statistics-section" id="statisticsSection" style="display: none;">
+            <h2>Performance Metrics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Average Waiting Time</div>
+                    <div class="stat-value" id="avgWaitingTime">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Average Turnaround Time</div>
+                    <div class="stat-value" id="avgTurnaroundTime">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Average Response Time</div>
+                    <div class="stat-value" id="avgResponseTime">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">CPU Utilization</div>
+                    <div class="stat-value" id="cpuUtilization">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Throughput</div>
+                    <div class="stat-value" id="throughput">0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metric Formula Guide Section -->
+<section class="card formula-section" id="formulaSection" style="display: none;">
+    <div class="formula-header">
+        <h2>Metric Formula Guide</h2>
+        <button class="btn btn-secondary" onclick="toggleFormulaGuide()" id="formulaToggleBtn">
+            Show Explanation
+        </button>
+    </div>
+
+    <div id="formulaContent" style="display: none;">
+        <!-- Static Formula Display -->
+        <div class="formula-card">
+            <h3>Turnaround Time</h3>
+            <p>Completion Time − Arrival Time</p>
+        </div>
+
+        <div class="formula-card">
+            <h3>Waiting Time</h3>
+            <p>Turnaround Time − Burst Time</p>
+        </div>
+
+        <div class="formula-card">
+            <h3>Response Time</h3>
+            <p>First Start Time − Arrival Time</p>
+        </div>
+
+        <!-- Dynamic Calculation Steps -->
+        <div class="formula-calculations" id="formulaCalculations">
+            <!-- Step-by-step substitutions will be inserted here -->
+        </div>
+    </div>
+</section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Developed by Sheshanth S</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
