@@ -633,9 +633,11 @@ function resetAll() {
 
 // Call this at end of displayResults()
 function generateFormulaGuide() {
-    const container = document.getElementById('formulaContent');
+
+    const container = document.getElementById('formulaCalculations');
     if (!container) return;
 
+    // Clear only dynamic calculations
     container.innerHTML = '';
 
     processes.forEach(process => {
@@ -668,7 +670,6 @@ function generateFormulaGuide() {
         container.appendChild(card);
     });
 }
-
 
 // Toggle explanation visibility
 function toggleFormulaGuide() {
